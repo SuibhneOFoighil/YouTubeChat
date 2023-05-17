@@ -1,0 +1,9 @@
+langchain==0.0.169
+chromadb==0.3.22
+openai==0.27.6
+tiktoken==0.4.0
+youtube-transcript-api==0.6.0
+gradio==3.30.0
+pytube==15.0.0
+google-api-python-client==2.84.0
+requests==2.30.0
