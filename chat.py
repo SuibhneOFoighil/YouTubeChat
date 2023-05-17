@@ -105,14 +105,15 @@ class Session():
                     vid_button = gr.Button("Video")
                     playlist_button = gr.Button("Playlist")
                 gr.Markdown("""
-                **Disclaimer**: YouTubeChat does not work for videos without closed captioning or in languages other than english. Please let us know if this is a problem for you at suibhneof1@gmail.com
+                **Disclaimer**: YouTubeChat does not work for content without closed captioning or in languages other than english. We can't use *private* YouTube playlists either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We would love to hear from you!
                 """)
             with gr.Tab("Chat"):
                 chatbot = gr.Chatbot()
                 msg = gr.Textbox(label='Questions', placeholder='Submit a URL in the "Link" tab before chatting👆.')
                 with gr.Row():
-                    clear = gr.Button("Clear")
                     submit = gr.Button("Send")
+                    clear = gr.Button("Clear")
+                    
 
                 msg.submit(respond, [msg, chatbot], [msg, chatbot])
                 submit.click(respond, [msg, chatbot], [msg, chatbot])
