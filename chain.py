@@ -30,7 +30,7 @@ def get_interpreter_chain(llm):
     Answer: The key points of the are that Fruits are delicious and good for you because they are high in fiber
     Context: [Document(page_content="Fruits are very delicious", metadata={{'id': 'L_Guz73e6fw-t4127.46', 'vidid': 'L_Guz73e6fw', 'citation': 'https://youtu.be/L_Guz73e6fw?t=4127'}})], [Document(page_content="Fruits are very good for you - they are high in fiber", metadata={{'id': 'L_Guz73e6fw-t4150.49', 'vidid': 'L_Guz73e6fw', 'citation': 'https://youtu.be/L_Guz73e6fw?t=4150'}})]
     Citations: [(1)](https://youtu.be/L_Guz73e6fw?t=4127), [(2)](https://youtu.be/L_Guz73e6fw?t=4150)
-    Formatted Answer: The key points of the are that Fruits are delicious [(1)](https://youtu.be/L_Guz73e6fw?t=4127) and good for you because they are high in fiber [(2)](https://youtu.be/L_Guz73e6fw?t=4150)
+    Citted Answer: The key points of the are that Fruits are delicious [(1)](https://youtu.be/L_Guz73e6fw?t=4127) and good for you because they are high in fiber [(2)](https://youtu.be/L_Guz73e6fw?t=4150)
     Question: {query}
     Answer: {result}
     Context: {source_documents}

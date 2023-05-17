@@ -46,7 +46,7 @@ class Session():
             session.id = extract_text(link, 'list=', '&')
             if session.id:
                 try: 
-                    return loadEmbeddings(session=session)
+                    loadEmbeddings(session=session)
                     loadChain(session=session)
                     return { link_input: gr.update(placeholder='Ready to Chat? Click the "Chat" Tab👆.', value='') }
                 except:
@@ -97,7 +97,7 @@ class Session():
         with gr.Blocks(title="Youtube Chat", theme="soft") as demo:
             gr.Markdown("""
             # YouTube Chat
-            Enter a YouTube link and chat with the video(s) 💬
+            Enter a link and chat with the video(s) 💬
             """)
             with gr.Tab("Link"):
                 link_input = gr.Textbox(type="text", label="URL")
@@ -105,7 +105,7 @@ class Session():
                     vid_button = gr.Button("Video")
                     playlist_button = gr.Button("Playlist")
                 gr.Markdown("""
-                **Disclaimer**: YouTubeChat does not work for content without closed captioning or in languages other than english. We can't use *private* YouTube playlists either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We would love to hear from you!
+                **Disclaimer**: YouTubeChat does not work for videos with no closed captioning or in languages other than english. *Private* YouTube playlists will not work, either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We value your feedback!
                 """)
             with gr.Tab("Chat"):
                 chatbot = gr.Chatbot()
@@ -123,7 +123,7 @@ class Session():
                 "Can you summarize the main themes discussed in the video(s)?",
                 "What are the main points of the video(s)?",
                 "What are the topics discussed in the video(s)?",
-                "What are the video(s) about?",
+                "Provide a table of contents for the video(s) and example questions",
                 "What are the most important things to remember from the video(s)?"
                 ]
 
