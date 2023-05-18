@@ -3,8 +3,8 @@ from langchain import PromptTemplate
 from langchain.chains import RetrievalQA, LLMChain, SequentialChain
 
 def get_qa_chain(llm, docsearch):
-    prompt_template = """Use the following pieces of context to answer the question. If the context is not relevant, do not try to answer.
-    {context}
+    prompt_template = """Use the following pieces of Context to Answer the Question. Use only the relevant information and do not rewrite the Context, verbatim. If the Context is not relevant, do not try to answer. 
+    Context: {context}
     Question: {question}
     Answer:"""
 
