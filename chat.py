@@ -105,7 +105,7 @@ class Session():
                     vid_button = gr.Button("Video")
                     playlist_button = gr.Button("Playlist")
                 gr.Markdown("""
-                **Disclaimer**: YouTubeChat does not work for videos with no closed captioning or in languages other than english. *Private* YouTube playlists will not work, either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We value your feedback!
+                **Disclaimer**: YouTubeChat does not work for videos without closed captioning or in languages other than english. *Private* YouTube playlists will not work, either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We value your feedback!
                 """)
             with gr.Tab("Chat"):
                 chatbot = gr.Chatbot()
@@ -123,7 +123,6 @@ class Session():
                 "Can you summarize the main themes discussed in the video(s)?",
                 "What are the main points of the video(s)?",
                 "What are the topics discussed in the video(s)?",
-                "Provide a table of contents for the video(s) and example questions",
                 "What are the most important things to remember from the video(s)?"
                 ]
 

@@ -44,10 +44,12 @@ def loadEmbeddings(session):
 
     # Retreive YouTube Transcripts
     video_transcripts = []
+    transcript_ids = []
     for vidid in videoIDs:
         try:
             transcript = YouTubeTranscriptApi.get_transcript(vidid, languages=['en'])
             video_transcripts.append(transcript)
+            transcript_ids.append(vidid)
         except:
             pass
 
@@ -55,7 +57,7 @@ def loadEmbeddings(session):
         return 'We failed to get any english transcripts😔: try another video!'
     
     #Parse the Transcripts
-    new_data = [ parse_video(data, vidid) for data, vidid in zip(video_transcripts, videoIDs) ]
+    new_data = [ parse_video(data, vidid) for data, vidid in zip(video_transcripts, transcript_ids) ]
     docs = [item for sublist in new_data for item in sublist]
 
     #Embedding Documents for Question-Answer Model
