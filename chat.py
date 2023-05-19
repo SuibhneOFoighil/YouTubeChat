@@ -22,6 +22,7 @@ class Session():
         session.docsearch = '' # the Chroma Vector database for similarity queries
         session.chain = '' # the langchain function that runs sequential models
         session.embedding_model = OpenAIEmbeddings() #Using ada2-embedding model from OpenAI
+        # print(openai.Model.list())
         session.llm = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0)# Using gpt-3.5-turbo as the Reasoning Engine
 
     def chatWithYoutube(session):
