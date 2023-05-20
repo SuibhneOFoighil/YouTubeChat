@@ -22,6 +22,8 @@ def parse_video(data, vidid, window=70, stride=67):
 
 def loadEmbeddings(session):
 
+    # Reset vector database
+    session.docsearch = ''
     videoIDs = [session.id]
 
     # Retreive VideoIDs for playlist
@@ -52,9 +54,6 @@ def loadEmbeddings(session):
             transcript_ids.append(vidid)
         except:
             pass
-
-    if len(video_transcripts) == 0:
-        return 'We failed to get any english transcripts😔: try another video!'
     
     #Parse the Transcripts
     new_data = [ parse_video(data, vidid) for data, vidid in zip(video_transcripts, transcript_ids) ]
