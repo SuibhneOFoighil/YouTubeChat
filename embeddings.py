@@ -7,7 +7,7 @@ from langchain.docstore.document import Document
 from langchain.vectorstores import Chroma
 from youtube_transcript_api import YouTubeTranscriptApi
 
-def parse_video(data, vidid, window=70, stride=67):
+def parse_video(data, vidid, window=70, stride=67): #preproccess, remove "[]" occurences music - data you for sure don't need
     docs = []
     for i in range(0, len(data), stride):
         i_end = min(len(data)-1, i+window)

@@ -1,4 +1,4 @@
-def get_qa_prompt():
+def get_qa_prompt(): #limit token to max model token
     return """Use the following pieces of Context to Answer the Question. Use only the relevant information and do not rewrite the Context, verbatim. If the Context is not relevant, do not try to answer. 
     Context: {context}
     Question: {question}

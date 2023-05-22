@@ -150,6 +150,6 @@ class Session():
             submit.click(respond, [msg, chatbot], [msg, chatbot])
             clear.click(lambda: None, None, chatbot, queue=False)
             
-        demo.launch(share=True, debug=True)
+        demo.launch()
 
 
