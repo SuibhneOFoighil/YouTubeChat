@@ -36,9 +36,16 @@ class Session():
                         return f'Something Went Wrong, Error Code {response.status_code}'
                 except requests.exceptions.RequestException:
                     return {
-                        link_input: gr.update(placeholder='Invalid Link', value='')
+                        link_input: gr.update(placeholder='Sorry, that was an invalid link. Try again!', value='')
                     }
             return wrapper
+
+        def success_message():
+            return { 
+                link_input: gr.update(placeholder='Success! Chat below👇.', value=''),
+                chatBox: gr.update(visible=True)
+            }
+
 
         @check_link
         def extract_playlistID(link):
@@ -48,21 +55,16 @@ class Session():
                 try: 
                     loadEmbeddings(session=session)
                     loadChain(session=session)
-                    return { link_input: gr.update(placeholder='Ready to Chat? Click the "Chat" Tab👆.', value='') }
+                    return success_message()
                 except:
                     return {
-                    link_input: gr.update(placeholder='There was an error getting playlist content. Please re-enter the URL  or double check your API key in " .env".', value='')
+                    link_input: gr.update(placeholder='Sorry, there was an error getting playlist content. Please re-enter the URL or try another playlist!', value='')
                 }
             else:
                 return {
                     link_input: gr.update(placeholder='Please enter a YouTube playlist URL', value='')
                 }
         
-        def success_message():
-            return { 
-                link_input: gr.update(placeholder='Ready to Chat? Click the "Chat" Tab👆.', value='')
-            }
-
         @check_link
         def extract_videoID(link):
             session.type = 'video'
@@ -74,7 +76,7 @@ class Session():
                     return success_message()
                 except:
                     return { 
-                        link_input: gr.update(placeholder='There was an error getting the video content. Please re-enter the URL', value='') #FAILS on subtitle disabled videos, no in english language
+                        link_input: gr.update(placeholder='Sorry, there was an error getting the video content. Please re-enter the URL or try another video!', value='') #FAILS on videos without an english transcript
                     }
             else:
                 return {
@@ -90,34 +92,42 @@ class Session():
         def respond(message, chat_history):
             bot_message = chat_response(message)
             chat_history.append((message, bot_message))
-            time.sleep(1) #FIND A WAY SO IT WONT CRAP OUT IF SENT BEFORE READY
+            time.sleep(1)
             return "", chat_history
 
         # The YouTubeChat Interface
-        with gr.Blocks(title="Youtube Chat", theme="soft") as demo:
+        with gr.Blocks(title="Youtube Chat", theme='soft') as demo:
+
             gr.Markdown("""
             # YouTube Chat
             Enter a link and chat with the video(s) 💬
             """)
-            with gr.Tab("Link"):
+            
+            with gr.Box() as linkBox:
+                
                 link_input = gr.Textbox(type="text", label="URL")
-                with gr.Row():
-                    vid_button = gr.Button("Video")
-                    playlist_button = gr.Button("Playlist")
-                gr.Markdown("""
-                **Disclaimer**: YouTubeChat does not work for videos without closed captioning or in languages other than english. *Private* YouTube playlists will not work, either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We value your feedback!
-                """)
-            with gr.Tab("Chat"):
-                chatbot = gr.Chatbot()
-                msg = gr.Textbox(label='Questions', placeholder='Submit a URL in the "Link" tab before chatting👆.')
-                with gr.Row():
-                    submit = gr.Button("Send")
-                    clear = gr.Button("Clear")
-                    
+                
+                with gr.Box():
+                    with gr.Row():
+                        vid_button = gr.Button("Video")
+                        playlist_button = gr.Button("Playlist")
+                
+                with gr.Box():
+                    gr.Markdown("""
+                    **Disclaimer**: YouTubeChat does not work for videos without closed captioning or in languages other than english. *Private* YouTube playlists will not work, either. Please let us know if this is a problem for you at "molus.suibhne@gmail.com". We value your feedback!
+                    """)
 
-                msg.submit(respond, [msg, chatbot], [msg, chatbot])
-                submit.click(respond, [msg, chatbot], [msg, chatbot])
-                clear.click(lambda: None, None, chatbot, queue=False)
+            with gr.Box(visible=False) as chatBox:
+                
+                with gr.Box():
+                    chatbot = gr.Chatbot()
+
+                    msg = gr.Textbox(label='Questions', placeholder='E.G. can you summarize the main themes discussed in the video(s)?')
+
+                with gr.Box():
+                    with gr.Row():
+                        submit = gr.Button("Send")
+                        clear = gr.Button("Clear")
 
                 examples = [
                 "Can you summarize the main themes discussed in the video(s)?",
@@ -126,11 +136,20 @@ class Session():
                 "What are the most important things to remember from the video(s)?"
                 ]
 
-                gr.Examples(examples, msg, label='Starters')
+                with gr.Box():
+                    gr.Examples(examples, msg, label='Starter Questions')
 
-            vid_button.click(fn=extract_videoID, inputs=link_input, outputs=link_input)
-            playlist_button.click(fn=extract_playlistID, inputs=link_input, outputs=link_input)
+            interface_outputs = [
+                link_input,
+                chatBox
+            ]
+
+            vid_button.click(fn=extract_videoID, inputs=link_input, outputs=interface_outputs)
+            playlist_button.click(fn=extract_playlistID, inputs=link_input, outputs=interface_outputs)
+            msg.submit(respond, [msg, chatbot], [msg, chatbot])
+            submit.click(respond, [msg, chatbot], [msg, chatbot])
+            clear.click(lambda: None, None, chatbot, queue=False)
             
-        demo.launch()
+        demo.launch(share=True, debug=True)
 
 
