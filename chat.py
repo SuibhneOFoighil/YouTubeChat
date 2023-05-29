@@ -151,5 +151,3 @@ class Session():
             clear.click(lambda: None, None, chatbot, queue=False)
             
         demo.launch(share=True, debug=True)
-
-
